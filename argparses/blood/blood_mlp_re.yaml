@@ -1,0 +1,66 @@
+dataset_config:
+  dataname: blood
+  # tabular
+  dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  # missing_rate: 0.0
+  # missing_rate: 0.3
+  # missing_rate: 0.5
+  missing_rate: 0.7
+  data_dir: /data/blood_dvm/data/blood/
+
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+
+  # save_csv: /home/admin1/User/mxy/demo/save_csv/re_miss03.csv
+  # save_csv: /home/admin1/User/mxy/demo/save_csv/re_miss05.csv
+  # save_csv: /home/admin1/User/mxy/demo/save_csv/re_cls_0208_miss07.csv
+
+
+train_config:
+  mode: train
+  # epochs: 50
+  epochs: 200
+  max_epochs: 400
+  # lr_max: 1e-3         
+  # lr_max: 5e-4          
+  lr_max: 1e-4                 # new_mlp_re 确定了  
+  # lr_max: 5e-5                 
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: true
+
+
+model_config:
+  net_v_tabular: encoder_mlp_prototype
+  model_name: 
+  freeze_layers: false
+  embedding_dropout: 0.
+  tab_proj_dropout: 0.1
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+  hidden_size_importance: 128
+
+  init_strat: kaiming
+  num_heads: 2
+
+
+predict_config:
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_prototype/feature_blood_195_0.3_crossentropy_encoder_mlp_prototype_1e-4_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_prototype/re_blood_195_0.3_crossentropy_encoder_mlp_prototype_1e-4_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_prototype/feature_blood_195_0.5_crossentropy_encoder_mlp_prototype_1e-4_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_prototype/re_blood_195_0.5_crossentropy_encoder_mlp_prototype_1e-4_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_prototype/feature_0.2_0.8_blood_140_0.7_None_crossentropy_encoder_mlp_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_prototype/re_0.2_0.8_blood_140_0.7_None_crossentropy_encoder_mlp_prototype_5e-5_best_model.pth
+
+

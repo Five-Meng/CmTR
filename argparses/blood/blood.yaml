@@ -1,0 +1,80 @@
+
+dataset_config:
+  dataname: blood
+  # image
+  dataset: /data/blood/dataset/图像数据/
+  # tabular
+  dataset_tabular: /data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  missing_rate: 0.3
+  missing_mask_train: /data/blood/mask/random/dvm_random_nostandard_0.3_train_mask.npy
+  missing_mask_test: /data/blood/mask/random/dvm_random_nostandard_0.3_test_mask.npy
+  # result
+  image_result_path: /data/result/baseline/image/
+  tabular_result_path: /data/result/baseline/tabular/
+  imgtab_result_path: /data/result/baseline/imgtab/
+  # predict
+  predict_dirpath: /home/ubuntu/work/blood/数据集/图像数据/验证组/0
+
+  field_lengths_tabular: /data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  model_save_path: 
+
+
+train_config:
+  mode: train
+  epochs: 100
+  max_epochs: 1000
+  lr_max: 3e-3
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  gamma: 0.5
+  find_epoch: false
+
+
+
+
+H2T:
+  rho_h2t: 0.3
+  h2t: false
+
+
+fusion:
+  loss_a: 0.3
+  loss_b: 1.0
+  loss_c: 1.0
+  scheme: 1
+
+
+model_config:
+  net_v: resnet34
+  net_v_tabular: encoder_mlp_block_prototype
+  net_v_imgtab: img_tab_baseline
+  model_name: mostfreq_mean
+  freeze_layers: false
+  hidden_size1: 512
+  hidden_size2: 1024
+  tabular_embedding_dim: 16
+  embedding_dropout: 0.0
+  tabular_transformer_num_layers: 1
+  drop_rate: 0.1
+  eval_one_hot: true
+
+
+
+prototype:
+  is_prototype: false
+  produce_prototype: mean
+  tabular_embedding_method: cat_con_transformer
+  reconstruct_tabular: Transformer_Embedding_R
+  checkpoint_path: /data/result/baseline/tabular/prototype/blood_mostfreq_mean_best_model.pth
+  init_strat: kaiming
+  classify_method: only_feature
+  cls_token: cls_token
+  method: tab_R_C
+  alpha: 5e-5
+  beta: 3
+  lr_max_prototype: 1e-3
+
+

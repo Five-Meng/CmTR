@@ -1,0 +1,43 @@
+
+dataset_config:
+  dataname: blood
+  # image
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  # result
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  # predict
+  predict_dirpath: /home/ubuntu/work/blood/数据集/图像数据/验证组/0
+  data_dir: /data/blood_dvm/data/blood/
+
+
+train_config:
+  mode: train
+  epochs: 275
+  max_epochs: 200
+  lr_max: 1e-4
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  # lossfunc: ldamloss   # epoch=135, acc=82.98, range(100, xx, 5)
+  # lossfunc: focalloss    # epoch:170, best_acc:83.96094832160982 range(100, xx, 5) gamma=1.0
+  # gamma: 0.5
+  gamma: 1.0
+  # gamma: 2.0
+  # gamma: 5.0
+  find_epoch: false
+  num_cls: 7
+
+
+H2T:
+  h2t: false
+  # rho_h2t: 0.4        
+  rho_h2t: 0.45   # Best score:83.96094832160982, epoch: 76, range(40, xx, 2)
+  # rho_h2t: 0.5 
+  # rho_h2t: 0.55
+
+model_config:
+  net_v: resnet50
+  freeze_layers: false
+
+

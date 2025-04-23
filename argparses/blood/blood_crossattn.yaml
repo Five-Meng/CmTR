@@ -1,0 +1,54 @@
+dataset_config:
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  dataname: blood
+  # tabular
+  dataset_tabular_t: /home/admin1/User/mxy/demo/save_csv/blood/re_cls_miss03.csv
+  dataset_tabular_i: /home/admin1/User/mxy/demo/save_csv/blood/img_re_cls_miss03.csv
+  # missing_rate: 0.0
+  missing_rate: 0.3
+  # missing_rate: 0.5
+  # missing_rate: 0.7
+  data_dir: /data/blood_dvm/data/blood/
+  missing_mask_train: /data/blood_dvm/data/blood/mask_0.0_train.npy
+  missing_mask_test: /data/blood_dvm/data/blood/mask_0.0_test.npy
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+
+train_config:
+  mode: train
+  # epochs: 50
+  epochs: 400
+  max_epochs: 1000
+  # lr_max: 1e-3         
+  # lr_max: 5e-4          
+  # lr_max: 1e-4
+  lr_max: 5e-5      # TDM, 400        
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+model_config:
+  net: crossattn
+  model_name: branch
+  freeze_layers: false
+  embedding_dropout: 0.
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+  hidden_size_importance: 128
+  dim_fusion: 128
+
+  init_strat: kaiming
+  num_heads: 2
+
+

@@ -1,0 +1,101 @@
+########### 0.0: epoch:100, best_acc: 82.28
+
+dataset_config:
+  dataname: blood
+  # tabular
+  dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  missing_rate: 0.0
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/mostfreq_mean.csv
+  # missing_rate: 0.3
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/mostfreq_mean.csv
+  # missing_rate: 0.5
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/mostfreq_mean.csv
+  # missing_rate: 0.7
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/missforest.csv
+  # missing_rate: 0.3
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/missforest.csv
+  # missing_rate: 0.5
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/missforest.csv
+  # missing_rate: 0.7
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/mostfreq_distributions.csv
+  # missing_rate: 0.3
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/mostfreq_distributions.csv
+  # missing_rate: 0.5
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/mostfreq_distributions.csv
+  # missing_rate: 0.7
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/block_re.csv
+  # missing_rate: 0.7
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re.csv
+  # missing_rate: 0.3
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/block_re.csv
+  # missing_rate: 0.5
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/block_re.csv
+  # missing_rate: 0.7
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re_cls.csv
+  # missing_rate: 0.3
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/block_re_cls.csv
+  # missing_rate: 0.5
+
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/block_re_cls.csv
+  # missing_rate: 0.7
+
+  # missing_mask_train: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.3_train_mask.npy
+  # missing_mask_test: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.3_test_mask.npy
+  missing_mask_train: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.0_train_mask.npy
+  missing_mask_test: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.0_test_mask.npy
+
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  model_save_path: 
+
+
+train_config:
+  mode: train
+  epochs: 100
+  max_epochs: 300
+  # lr_max: 5e-4
+  lr_max: 1e-4
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+model_config:
+  net_v_tabular: encoder_mlp_block
+  # model_name: mostfreq_mean
+  # model_name: missforest
+  # model_name: block_re
+  model_name: none
+  # model_name: igrm
+  freeze_layers: false
+
+  tabular_embedding_dim: 32
+  tabular_transformer_num_layers: 2
+  mlp_radio: 4
+  tab_proj_dim: 512
+
+  embedding_dropout: 0.2
+  drop_rate: 0.3
+  drop_path: 0.2
+  tab_proj_dropout: 0.1
+
+  eval_one_hot: true
+  num_heads: 2
+
+
+

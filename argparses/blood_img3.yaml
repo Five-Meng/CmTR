@@ -1,0 +1,61 @@
+
+dataset_config:
+  dataname: blood
+  # image, 图片路径
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  # result, 结果保存路径, 这里记得改！！！！！
+  #image_result_path: /data/blood_dvm/data/result/baseline/image3/WDF
+  #image_result_path: /data/blood_dvm/data/result/baseline/image3/WPC
+  image_result_path: /data/blood_dvm/data/result/baseline/image3/WNR
+  num_cls: 7
+  data_dir: /data/blood_dvm/data/blood/
+
+  # channel_name指的是通道名字，取值: WDF、WPC、WNR
+  #channel_name: WDF
+  #channel_name: WPC
+  channel_name: WNR
+
+
+train_config:
+  mode: train
+  epochs: 275
+  max_epochs: 2000   
+  # lr_max: 5e-4
+  # lr_max: 1e-4
+  lr_max: 1e-3
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  # lossfunc: ldamloss
+  # lossfunc: focalloss
+  gamma: 5.0
+  find_epoch: false
+  num_cls: 7
+
+
+H2T:
+  h2t: false
+  rho_h2t: 0.35
+
+
+model_config:
+  # net_v的所有可能取值: resnet34, resnet18, resnet50, 
+  #                     vit16, vit16_in21k, vit32, vit32_in21k, 
+  #                     efficientnet-b0, efficientnet-b1, efficientnet-b2, shufflenet
+
+  #net_v: resnet18
+  #net_v: resnet34
+  #net_v: resnet50
+  net_v: vit16
+  #net_v: vit32
+  #net_v: efficientnet-b0
+  #net_v: efficientnet-b1
+  #net_v: shufflenet
+  freeze_layers: false
+
+
+# 进入虚拟环境
+# conda activate torch12gpu
+# 终端命令
+# python /home/admin1/User/mxy/demo/main3.py --yaml_config /home/admin1/User/mxy/demo/argparses/blood_img3.yaml

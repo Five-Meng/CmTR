@@ -1,0 +1,123 @@
+dataset_config:
+  dataname: dvm
+  # tabular
+  dataset_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_data/dvm_orig_standard.csv
+  data_dir: /data/blood_dvm/data/dvm/
+  # missing_rate: 0.0
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/missforest_dvm.csv
+  # missing_rate: 0.3
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/missforest_dvm.csv
+  missing_rate: 0.5
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/missforest_dvm.csv
+
+  # missing_rate: 0.7
+  missing_mask_train: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.5_train_mask.npy
+  missing_mask_val: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.5_val_mask.npy
+  missing_mask_test: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.5_test_mask.npy
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_TIP_data/field_lengths_tabular_dvm.pt
+
+  save_csv: /home/admin1/User/mxy/demo/save_csv/dvm/img_re_prototype07.csv
+
+  load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_feature_105_5e-5_0.6552247700102204.pth
+  load_checkpoint_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_re_105_5e-5_0.6552247700102204.pth
+  load_checkpoint_fc: 
+
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/03_feature_100_5e-5_0.7530563086211822_69.85080718302194.pth
+  # load_checkpoint_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/03_re_100_5e-5_0.7530563086211822_69.85080718302194.pth
+  # load_checkpoint_fc: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/03_fc_100_5e-5_0.7530563086211822_69.85080718302194.pth
+
+
+train_config:
+  mode: train
+  epochs: 100
+  # epochs: 151
+  max_epochs: 1000
+  # lr_max: 1e-3      # 这个lr是确定的, 下面的dim，那三个都可以差别不大   
+  # lr_max: 5e-4          
+  lr_max: 1e-4
+  # lr_max: 5e-5              
+  # lr_max: 3e-3
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  # batch_size: 128
+  num_cls: 286
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+model_config:
+  net_v_tabular: encoder_mlp_prototype
+  model_name: re_cls_prototype
+  freeze_layers: false
+  embedding_dropout: 0.0
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 512
+
+  # 1
+  # embedding_dim: 512
+  # hidden_size1: 2048
+  # hidden_size2: 1024
+  # hidden_size3: 512  
+ 
+  embedding_dim: 256
+  hidden_size1: 2048
+  hidden_size2: 1024
+  hidden_size3: 512  
+  latent_dim: 512
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024  
+
+  hidden_size_importance: 512
+
+  init_strat: kaiming
+
+
+predict_config:
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/03_feature_100_5e-5_0.584679589640439.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/03_re_100_5e-5_0.584679589640439.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_feature_105_5e-5_0.6552247700102204.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_re_105_5e-5_0.6552247700102204.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/07_feature_160_5e-5_0.7759559648278705.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/07_re_160_5e-5_0.7759559648278705.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_feature_100_5e-5_1.386613375539899_28.555233085434427.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_re_100_5e-5_1.386613375539899_28.555233085434427.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/temp/reprototype/07_feature_50_47_1e-5_0.7740230821512278_0.4038466369578135.pth
+  # load_predict_re: /data/blood_dvm/data/result/temp/reprototype/07_re_50_47_1e-5_0.7740230821512278_0.4038466369578135.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/temp/reclsprototype/07_feature_100_12_1e-5_28.43392889533829_0.7869741114107468.pth
+  # load_predict_re: /data/blood_dvm/data/result/temp/reclsprototype/07_re_100_12_1e-5_28.43392889533829_0.7869741114107468.pth
+
+  load_predict_feature: /data/blood_dvm/data/result/temp/reprototype/07_feature_50_46_1e-5_0.77399326099494_0.403852141878684.pth
+  load_predict_re: /data/blood_dvm/data/result/temp/reprototype/07_re_50_46_1e-5_0.77399326099494_0.403852141878684.pth
+
+

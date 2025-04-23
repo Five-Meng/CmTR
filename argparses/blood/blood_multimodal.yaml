@@ -1,0 +1,114 @@
+
+dataset_config:
+  dataname: blood
+  # image
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  # result
+  missing_rate: 0.7
+  dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  num_cls: 7
+  t_sne_path: /data/blood_dvm/data/result/end/t_sne/efficientb1/
+  data_dir: /data/blood_dvm/data/blood/
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  it_result_path: /data/blood_dvm/data/result/baseline/image_tabular/
+
+  # save_csv: /home/admin1/User/mxy/demo/save_csv/blood/re_imgtab_b4_miss05.csv
+
+
+train_config:
+  mode: train
+  epochs: 50
+  # epochs: 36         # 调整
+  max_epochs: 600    
+  # lr_max: 1e-3        # 调整
+  # lr_max: 5e-4
+  lr_max: 1e-4
+  # lr_max: 5e-5
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  gamma: 5.0
+  find_epoch: false
+  num_cls: 7
+  checkpoint_path: /data/blood_dvm/data/result/checkpoint_pth/
+
+
+H2T:
+  h2t: false
+  rho_h2t: 0.35
+
+
+model_config:
+  # net_v: efficientnet-b1
+  net_v: encoder_mlp
+  net_v_tabular: encoder_mlp_prototype
+  # net_v: b1_mlp
+  freeze_layers: false
+  embedding_dropout: 0.
+  tab_proj_dropout: 0.1
+  model_name: 
+
+  # # # # # # # # # # 
+  # latent_dim: 512
+  # latent_dim: 256
+  latent_dim: 128
+  # # # # # # # # # # 
+  re_dim: 512  
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+  tabular_embedding_dim: 128    # =embedding_dim
+
+
+predict_config:
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b2/07_image_70_1e-4_0.6263530780580752.pth
+  # load_predict_re_img: /data/blood_dvm/data/result/temp/blood/b2/07_imgre_70_1e-4_0.6263530780580752.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b2/07_table_70_1e-4_0.6263530780580752.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b2/07_tabre_70_1e-4_0.6263530780580752.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b2/07_align_70_1e-4_0.6263530780580752.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b4_imgq2/07_image_120_1e-4_0.6046795739248042.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b4_imgq2/07_align_120_1e-4_0.6046795739248042.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/07_table_120_1e-4_0.6046795739248042.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/07_tabre_120_1e-4_0.6046795739248042.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b4_imgq2/07_atten_120_1e-4_0.6046795739248042.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b3_tabq/07_image_75_1e-4_0.6384957865857347.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b3_tabq/07_align_75_1e-4_0.6384957865857347.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b3_tabq/07_table_75_1e-4_0.6384957865857347.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b3_tabq/07_tabre_75_1e-4_0.6384957865857347.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b3_tabq/07_atten_75_1e-4_0.6384957865857347.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b5_tabq/07_image_55_1e-4_0.6216991500541921.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b5_tabq/07_align_55_1e-4_0.6216991500541921.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b5_tabq/07_table_55_1e-4_0.6216991500541921.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b5_tabq/07_tabre_55_1e-4_0.6216991500541921.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b5_tabq/07_atten_55_1e-4_0.6216991500541921.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b6_imgq2/07_image_75_1e-4_0.5142996952540373.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b6_imgq2/07_align_75_1e-4_0.5142996952540373.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b6_imgq2/07_table_75_1e-4_0.5142996952540373.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b6_imgq2/07_tabre_75_1e-4_0.5142996952540373.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b6_imgq2/07_atten_75_1e-4_0.5142996952540373.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b4_imgq2/03_image_95_1e-4_0.645501668400013.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b4_imgq2/03_align_95_1e-4_0.645501668400013.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/03_table_95_1e-4_0.645501668400013.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/03_tabre_95_1e-4_0.645501668400013.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b4_imgq2/03_atten_95_1e-4_0.645501668400013.pth
+
+  # load_predict_feature_img: /data/blood_dvm/data/result/temp/blood/b4_imgq2/05_image_75_1e-4_0.6101872910183012.pth
+  # load_predict_align: /data/blood_dvm/data/result/temp/blood/b4_imgq2/05_align_75_1e-4_0.6101872910183012.pth
+  # load_predict_feature_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/05_table_75_1e-4_0.6101872910183012.pth
+  # load_predict_re_tab: /data/blood_dvm/data/result/temp/blood/b4_imgq2/05_tabre_75_1e-4_0.6101872910183012.pth
+  # load_predict_atten: /data/blood_dvm/data/result/temp/blood/b4_imgq2/05_atten_75_1e-4_0.6101872910183012.pth
+
+  # load_predict_feature_img: 
+  # load_predict_align: 
+  # load_predict_feature_tab: 
+  # load_predict_re_tab: 
+  # load_predict_atten: 

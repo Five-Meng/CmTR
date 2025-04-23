@@ -1,0 +1,65 @@
+
+dataset_config:
+  dataname: blood
+  # image
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  # result
+  missing_rate: 0.7
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  num_cls: 7
+  t_sne_path: /data/blood_dvm/data/result/end/t_sne/efficientb1/
+  data_dir: /data/blood_dvm/data/blood/
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  it_result_path: /data/blood_dvm/data/result/baseline/image_tabular/
+
+
+train_config:
+  mode: train
+  epochs: 50
+  # epochs: 36         # 调整
+  max_epochs: 2000    
+  lr_max: 1e-3        # 调整
+  #lr_max: 5e-4
+  # lr_max: 1e-4
+  # lr_max: 5e-5
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  gamma: 5.0
+  find_epoch: false
+  num_cls: 7
+  checkpoint_path: /data/blood_dvm/data/result/checkpoint_pth/
+
+
+H2T:
+  h2t: false
+  rho_h2t: 0.35
+
+
+model_config:
+  # net_v: efficientnet-b1
+  net_v: encoder_mlp
+  # net_v: b1_mlp
+  freeze_layers: false
+  embedding_dropout: 0.
+  tab_proj_dropout: 0.1
+  model_name: 
+
+  # # # # # # # # # # 
+  latent_dim: 512
+  # latent_dim: 256
+  # # # # # # # # # # 
+  re_dim: 512  
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+
+
+# latent_dim\labmda_re\lr_max\epoch\
+
+
+# conda activate torch12gpu
+# python /home/admin1/User/mxy/demo/backbone_img_tab/ItoR_TtoR_toR.py --yaml_config /home/admin1/User/mxy/demo/argparses/blood_multimodal.yaml

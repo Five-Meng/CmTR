@@ -1,0 +1,133 @@
+dataset_config:
+  dataname: blood
+  # tabular
+  dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  # missing_rate: 0.0
+  missing_rate: 0.3
+  # missing_rate: 0.5
+  # missing_rate: 0.7
+
+  missing_mask_train: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.3_train_mask.npy
+  missing_mask_test: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.3_test_mask.npy
+  
+  # missing_mask_train: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.5_train_mask.npy
+  # missing_mask_test: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.5_test_mask.npy
+  
+  # missing_mask_train: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.7_train_mask.npy
+  # missing_mask_test: /data/blood_dvm/data/blood/mask/random/dvm_random_nostandard_0.7_test_mask.npy
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  model_save_path: 
+
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re_cls.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/block_re_cls.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/block_re_cls.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re_cls_prototype.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re_cls_prototype_e10.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.3/block_re_cls_1e4200.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.5/block_re.csv
+  # save_csv: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/block_re.csv
+
+  log_sim_path: /home/admin1/User/mxy/demo/misclassifation/sim_matrix_cos/re_0.3/a.csv
+  t_sne_path: /data/blood_dvm/data/result/end/t_sne/re_prototype/
+  lambda_txt_path: /home/admin1/User/mxy/demo/prototype/re/0.3/
+
+
+train_config:
+  mode: train
+  # epochs: 50
+  epochs: 200
+  max_epochs: 1000
+  # lr_max: 1e-3         # txt、txt_t: re_cls: 用的1e-3
+  # lr_max: 5e-4           # txt_tt: re_cls: 用的5e-4
+  lr_max: 1e-4
+  # lr_max: 5e-5               # txt_ttt: re_cls: 用的5e-5
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+prototype_method:
+  prototype_period: 1
+  produce_prototype: median
+  start_rate: 0.9
+  margin: 0.3
+  temperature: 1
+  topn_prototype: false 
+  arcface_margin: 0
+  # load_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_775_0.3_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_reconstruction: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_775_0.3_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_245_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_reconstruction: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_245_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_fc: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/fc_blood_775_0.3_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  load_feature:
+  load_reconstruction: 
+  load_fc: 
+  # load_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_465_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_reconstruction: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_465_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_fc: 
+
+model_config:
+  net_v_tabular: encoder_mlp_block_prototype
+  # model_name: reconstruction
+  model_name: reconstruction_cls_prototype
+  freeze_layers: false
+
+  tabular_embedding_dim: 32
+
+  embedding_dropout: 0.0
+  hidden_size1: 512
+  hidden_size2: 1024
+  tab_proj_dim: 512
+  tab_proj_dropout: 0.1
+
+
+  tabular_transformer_num_layers: 2
+  drop_rate: 0.3
+  mlp_radio: 4
+  drop_path: 0.2
+
+  eval_one_hot: true
+
+  tabular_embedding_method: encoder_mlp_block_prototype
+
+  init_strat: kaiming
+  num_heads: 8
+
+
+predict_config:
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_775_0.3_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_775_0.3_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_775_0.5_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_775_0.5_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_775_0.7_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_775_0.7_reconstruction_cls_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_25_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_25_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_465_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_465_0.3_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/baseline/tabular/encoder_mlp_block_prototype/feature_blood_10_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/baseline/tabular/encoder_mlp_block_prototype/re_blood_10_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_5e-5_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/feature_blood_200_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_1e-4_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block_prototype/re_blood_200_0.3_reconstruction_cls_prototype_crossentropy_encoder_mlp_block_prototype_1e-4_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block/feature_blood_465_0.5_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block/re_blood_465_0.5_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_mlp_block/feature_blood_465_0.7_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_mlp_block/re_blood_465_0.7_crossentropy_encoder_mlp_block_prototype_1e-3_best_model.pth

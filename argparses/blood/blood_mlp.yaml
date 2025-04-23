@@ -1,0 +1,81 @@
+dataset_config:
+  dataname: blood
+  # tabular
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/re_cls_prototype_miss03.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/re_cls_0208_miss07.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/re_cls_prototype_miss05.csv
+  # dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/missing_0.7/mostfreq_distributions.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/re_imgtab_b4_miss03.csv
+
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/img_re_cls_miss00_2.csv
+  dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/CmTR07.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/img_re_prototype_miss03.csv
+
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/img_re_prototype_miss03.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/blood/img_re_cls_prototype_miss03.csv
+
+  # missing_rate: 0.0
+  # missing_rate: 0.3
+  # missing_rate: 0.5
+  missing_rate: 0.7
+  data_dir: /data/blood_dvm/data/blood/
+  missing_mask_train: /data/blood_dvm/data/blood/mask_0.0_train.npy
+  missing_mask_test: /data/blood_dvm/data/blood/mask_0.0_test.npy
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reclsprototype/07_feature_195_55_1e-5_67.08507672978911_0.6279204047208384.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/07_feature_190_38_1e-5_0.6189885358930133.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/03_feature_190_80_1e-5_0.59284161280638.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/05_feature_190_55_1e-5_0.5877778919172088.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reclsprototype3/03_feature_135_121_1e-5_77.40585774058577_0.5879583318446304.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reclsprototype3/05_feature_140_78_1e-5_74.05857740585775_0.5890737486018629.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/03_feature_50_7_1e-5_0.5910465922412738_0.4094810760023372.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/blood/reclsprototype/03_feature_135_121_1e-5_77.40585774058577_0.5879583318446304.pth
+  load_checkpoint_fc: 
+  load_checkpoint_feature: 
+
+train_config:
+  mode: train
+  # epochs: 50
+  epochs: 400
+  max_epochs: 1000
+  # lr_max: 1e-3         
+  lr_max: 5e-4          
+  # lr_max: 1e-4
+  # lr_max: 5e-5      # TDM, 400        
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  num_cls: 7
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: true
+
+
+model_config:
+  net_v_tabular: encoder_newmlp
+  model_name: miracle
+  freeze_layers: false
+  embedding_dropout: 0.
+  tab_proj_dropout: 0.1
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+  hidden_size_importance: 128
+
+  init_strat: kaiming
+  num_heads: 2
+
+
+H2T:
+  h2t: false
+  # rho_h2t: 0.2
+  # rho_h2t: 0.15
+  # rho_h2t: 0.35
+  rho_h2t: 0.2

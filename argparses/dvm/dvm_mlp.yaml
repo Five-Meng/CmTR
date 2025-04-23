@@ -1,0 +1,107 @@
+dataset_config:
+  dataname: dvm
+  # tabular
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_data/dvm_orig_standard.csv
+  dataset_tabular: /home/admin1/User/mxy/demo/save_csv/dvm/tdm03.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/dvm/tdm033.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/dvm/re_prototype05.csv
+  # dataset_tabular: /home/admin1/User/mxy/demo/save_csv/dvm/img_re_cls_miss07.csv
+  # missing_rate: 0.0
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/missforest_dvm.csv
+  # missing_rate: 0.3
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/missforest_dvm.csv
+  # missing_rate: 0.5
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/missforest_dvm.csv
+  missing_rate: 0.7
+
+  missing_mask_train: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_train_mask.npy
+  missing_mask_val: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_val_mask.npy
+  missing_mask_test: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_test_mask.npy
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_TIP_data/field_lengths_tabular_dvm.pt
+
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/03_feature_100_5e-5_0.584679589640439.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_feature_105_5e-5_0.6552247700102204.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/07_feature_160_5e-5_0.7759559648278705.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/07_feature_50_47_1e-5_0.7740230821512278_0.4038466369578135.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reclsprototype/07_feature_100_12_1e-5_28.43392889533829_0.7869741114107468.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/03_feature_50_10_1e-5_0.5875294210851116_0.40701945485814434.pth
+  # load_checkpoint_feature: /data/blood_dvm/data/result/temp/reprototype/05_feature_50_8_1e-5_0.658254777879177_0.4098278622261392.pth
+  load_checkpoint_feature: 
+  load_checkpoint_fc: 
+
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/03_feature_100_5e-5_0.7530563086211822_69.85080718302194.pth
+  # load_checkpoint_fc: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/03_fc_100_5e-5_0.7530563086211822_69.85080718302194.pth
+
+  # load_checkpoint_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_feature_100_5e-5_1.386613375539899_28.555233085434427.pth
+  # load_checkpoint_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_re_100_5e-5_1.386613375539899_28.555233085434427.pth
+  # load_checkpoint_fc: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_fc_100_5e-5_1.386613375539899_28.555233085434427.pth
+
+
+
+train_config:
+  mode: train
+  epochs: 200
+  # epochs: 150
+  max_epochs: 1000
+  # lr_max: 1e-3      # 这个lr是确定的, 下面的dim，那三个都可以差别不大   
+  # lr_max: 5e-4          
+  lr_max: 1e-4
+  # lr_max: 5e-5              
+  # lr_max: 1e-5
+  lr_min: 0
+  batch_size: 64
+  num_cls: 286
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+model_config:
+  net_v_tabular: encoder_newmlp
+  model_name: attn
+  freeze_layers: false
+  embedding_dropout: 0.0
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 512
+
+  # 1
+  # embedding_dim: 512
+  # hidden_size1: 2048
+  # hidden_size2: 1024
+  # hidden_size3: 512  
+ 
+  embedding_dim: 256
+  hidden_size1: 2048
+  hidden_size2: 1024
+  hidden_size3: 512  
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024  
+
+  hidden_size_importance: 512
+
+  init_strat: kaiming
+
+

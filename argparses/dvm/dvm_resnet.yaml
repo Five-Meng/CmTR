@@ -1,0 +1,44 @@
+
+dataset_config:
+  dataname: dvm
+  # image
+  dataset: /data/blood_dvm/data/dvm/dvm_img/
+  # result
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  num_cls: 286
+
+train_config:
+  mode: train
+  epochs: 300
+  max_epochs: 80          # (30, max_epoch, 2) resnet50  epoch:36, best_acc:94.65921458371123
+  # lr_max: 1e-3
+  lr_max: 5e-4
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  # lossfunc: ldamloss
+  gamma: 0.5
+  find_epoch: false
+  num_cls: 286
+  checkpoint_path: /data/blood_dvm/data/result/checkpoint_pth/
+
+
+H2T:
+  h2t: false
+  # rho_h2t: 0.45
+  # rho_h2t: 0.4
+  # rho_h2t: 0.3
+  # rho_h2t: 0.2
+  # rho_h2t: 0.1
+  rho_h2t: 0.05
+
+
+model_config:
+  net_v: resnet18
+  # net_v: resnet34
+  # net_v: resnet50
+  freeze_layers: false
+
+
+

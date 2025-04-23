@@ -1,0 +1,116 @@
+dataset_config:
+  dataname: dvm
+  # image
+  dataset: /data/blood_dvm/data/dvm/dvm_img/
+  # tabular
+  # dataset_tabular_i: /home/admin1/User/mxy/demo/save_csv/dvm/img_re_miss05.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_data/dvm_orig_standard.csv
+  dataset_tabular: /home/admin1/User/mxy/demo/save_csv/dvm/t_re_miss07.csv
+  data_dir: /data/blood_dvm/data/dvm/
+  # missing_rate: 0.0
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.3/missforest_dvm.csv
+  # missing_rate: 0.3
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.5/missforest_dvm.csv
+  # missing_rate: 0.5
+
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_mean_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/mostfreq_distributions_dvm.csv
+  # dataset_tabular: /data/blood_dvm/data/dvm/dvm_imputation_result/missing_0.7/missforest_dvm.csv
+
+  missing_rate: 0.7
+  missing_mask_train: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_train_mask.npy
+  missing_mask_val: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_val_mask.npy
+  missing_mask_test: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_test_mask.npy
+
+  # result
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+
+  field_lengths_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_TIP_data/field_lengths_tabular_dvm.pt
+  it_result_path: /data/blood_dvm/data/result/baseline/image_tabular/
+  save_csv: /home/admin1/User/mxy/demo/save_csv/dvm/img_re_cls_prototype_miss00.csv
+
+
+train_config:
+  mode: train
+  epochs: 200
+  # epochs: 151
+  max_epochs: 1000
+  # lr_max: 1e-3      # 这个lr是确定的, 下面的dim，那三个都可以差别不大   
+  # lr_max: 5e-4     
+  lr_max: 1e-4
+  # lr_max: 5e-5              
+  # lr_max: 3e-3
+  # lr_max: 5e-3
+  lr_min: 0
+  batch_size: 64
+  # batch_size: 128
+  num_cls: 286
+  seed: 2024
+  lossfunc: crossentropy
+  find_epoch: false
+
+
+model_config:
+  net: crossattn1
+  net_v_tabular: encoder_mlp_prototype
+  net_v: efficient-b1
+  model_name: img_re_cls_prototype
+  freeze_layers: false
+  embedding_dropout: 0.0
+  efficientb1_outdim: 1280
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 512
+
+  # 1
+  # embedding_dim: 512
+  # hidden_size1: 2048
+  # hidden_size2: 1024
+  # hidden_size3: 512  
+ 
+  embedding_dim: 256
+  hidden_size1: 2048
+  hidden_size2: 1024
+  hidden_size3: 512  
+  latent_dim: 2048
+
+  # embedding_dim: 512
+  # hidden_size1: 4096
+  # hidden_size2: 2048
+  # hidden_size3: 1024  
+
+  hidden_size_importance: 512
+
+  init_strat: kaiming
+
+  dim_fusion: 256
+
+
+predict_config:
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/03_feature_100_5e-5_0.584679589640439.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/03_re_100_5e-5_0.584679589640439.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_feature_105_5e-5_0.6552247700102204.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re/05_re_105_5e-5_0.6552247700102204.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_image/img_re/00_feature_100_1.1445030977521427.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_image/img_re/00_re_100_1.1445030977521427.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_image/img_re_cls/00_feature_100_0.37886158412475457_97.5478414656267.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_image/img_re_cls/00_re_100_0.37886158412475457_97.5478414656267.pth
+
+  load_predict_feature: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_feature_100_0.35784914591730604_97.11023943406494.pth
+  load_predict_re: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_re_100_0.35784914591730604_97.11023943406494.pth

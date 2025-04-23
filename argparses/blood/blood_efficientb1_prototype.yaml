@@ -1,0 +1,61 @@
+
+dataset_config:
+  dataname: blood
+  # image
+  dataset: /data/blood_dvm/data/blood/dataset/图像数据/
+  dataset_tabular: /data/blood_dvm/data/blood/blood_imputation_result/orign/mostfreq_mean.csv
+  # result
+  missing_rate: 0.7
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  num_cls: 7
+  t_sne_path: /data/blood_dvm/data/result/end/t_sne/efficientb1/
+  data_dir: /data/blood_dvm/data/blood/
+  field_lengths_tabular: /data/blood_dvm/data/blood/blood_TIP_data/field_lengths_tabular_blood.pt
+  it_result_path: /data/blood_dvm/data/result/baseline/image_tabular/
+
+  save_csv: /home/admin1/User/mxy/demo/save_csv/blood/img_re_cls_prototype_miss03.csv
+
+train_config:
+  mode: train
+  epochs: 80
+  max_epochs: 2000    
+  # lr_max: 1e-3
+  # lr_max: 5e-4
+  # lr_max: 1e-4
+  # lr_max: 5e-5
+  lr_max: 1e-5           # img_re
+  # lr_max: 5e-6
+  lr_min: 0
+  batch_size: 64
+  seed: 2024
+  lossfunc: crossentropy
+  gamma: 5.0
+  find_epoch: false
+  num_cls: 7
+  checkpoint_path: /data/blood_dvm/data/result/checkpoint_pth/
+
+
+
+
+model_config:
+  net_v: efficientnet-b1
+  freeze_layers: false
+  embedding_dropout: 0.
+  tab_proj_dropout: 0.1
+  model_name: re_cls_prototype
+
+  embedding_dim: 128
+  hidden_size1: 512
+  hidden_size2: 128
+  efficientb1_outdim: 1280
+
+  num_heads: 4
+  latent_dim: 512
+
+
+predict_config:
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_image/img_re_prototype/00_feature_190_0.5143797208907049.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_image/img_re_prototype/00_re_190_0.5143797208907049.pth
+
+  # load_predict_feature: /data/blood_dvm/data/result/end/encoder_image/img_re_cls_prototype/00_feature_60_0.5867864881308341_84.23988842398884.pth
+  # load_predict_re: /data/blood_dvm/data/result/end/encoder_image/img_re_cls_prototype/00_re_60_0.5867864881308341_84.23988842398884.pth
