@@ -86,7 +86,7 @@ def img_tab_align(model_align, model_atten, tab_mask, features_image, features_t
 
 
 def load_checkpoint(model, checkpoint_path, strict=True):
-    checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))  # 或者使用'cuda'如果你有足够的GPU内存
+    checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu')) 
     model.load_state_dict(checkpoint, strict=strict)
     print(f"Checkpoint {checkpoint_path} loaded successfully.")
 
