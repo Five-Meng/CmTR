@@ -96,98 +96,17 @@ def load_fusion_model(opt_dict):
 
 
 
-# def train(model_fusion, train_loader, test_loader, device, opt_dict):
-#     epochs = opt_dict['train_config']['epochs']
-#     class_longtail_ptpath = get_long_tail_id(opt_dict)
-#     tail_classes = class_longtail_ptpath[0]  
-#     long_classes = class_longtail_ptpath[1]  
-
-#     log_train = create_log(opt_dict)
-
-#     train_acc = AverageMeter('train_acc', ':.4e')
-#     val_acc = AverageMeter('val_acc', ':.4e')
-
-#     best_val_acc = 0
-
-#     model_fusion.to(device)
-
-#     loss_function_cls = nn.CrossEntropyLoss()
-#     pg_fusion = [p for p in model_fusion.parameters() if p.requires_grad]
-#     pg = pg_fusion
-
-#     optimizer = optim.Adam(pg, lr=float(opt_dict['train_config']['lr_max']))
-#     schedule = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=opt_dict['train_config']['epochs'])
-
-#     for epoch in range(epochs):
-#         # # import ipdb;ipdb.set_trace();
-#         train_acc.reset()
-#         model_fusion.train()
-
-#         # import ipdb;ipdb.set_trace();
-#         for step, data in enumerate(train_loader):
-#             image, tables, labels = data
-#             image, tables, labels = image.to(device), tables.to(device), labels.to(device)
-#             results = model_fusion(image, tables)
-#             loss_cls = loss_function_cls(results, labels)
-#             batch_size_cur = tables.size(0)
-#             train_acc_o = accuracy(results, labels)[0]
-#             train_acc.update(train_acc_o.item(), batch_size_cur)
-
-#             log_out = ('Epoch: [{0}][{1}/{2}], lr: {lr:.5f}\t'
-#                 'Train_Acc {acc.val:.4f} ({acc.avg:.4f})\t'.format(
-#                 epoch, step, len(train_loader), lr=optimizer.param_groups[-1]['lr'],
-#                 acc=train_acc
-#             ))
-#             log_train = write_log(log_train, log_out, opt_dict)
-                
-#             optimizer.zero_grad()
-#             loss_cls.backward()
-#             optimizer.step()
-
-#         schedule.step()
-#         model_fusion.eval()
-
-#         val_acc.reset()
-
-#         # import ipdb;ipdb.set_trace();
-#         with torch.no_grad():
-#             for step, data in enumerate(test_loader):
-#                 image, tables, labels = data
-#                 image, tables, labels = image.to(device), tables.to(device), labels.to(device)
-#                 results = model_fusion(image, tables)
-#                 loss_cls = loss_function_cls(results, labels)
-#                 batch_size_cur = tables.size(0)
-#                 val_acc_o = accuracy(results, labels)[0]
-#                 val_acc.update(val_acc_o.item(), batch_size_cur)
-
-#             log_out_val = ('Val_Acc {acc.val:.4f} ({acc.avg:.4f})\t'.format(
-#                 acc=val_acc
-#             ))
-#             log_train = write_log(log_train, log_out_val, opt_dict)
-            
-#             if(val_acc.avg > best_val_acc):
-#                 best_val_acc = val_acc.avg
-#                 log_best = f"Saved at {best_val_acc}"
-#                 log_train = write_log(log_train, log_best, opt_dict)
-
-
-#     print("Finish!")
-#     return best_val_acc
-
-
-
-from sklearn.metrics import f1_score  # 需要添加的导入
+from sklearn.metrics import f1_score  
 
 def train(model_fusion, train_loader, test_loader, device, opt_dict):
     epochs = opt_dict['train_config']['epochs']
-    num_cls = opt_dict['train_config']['num_cls']  # 需要获取类别总数
+    num_cls = opt_dict['train_config']['num_cls'] 
     class_longtail_ptpath = get_long_tail_id(opt_dict)
     tail_classes = class_longtail_ptpath[0]  
     long_classes = class_longtail_ptpath[1]  
     
     log_train = create_log(opt_dict)
 
-    # 添加统计指标
     train_acc = AverageMeter('train_acc', ':.4e')
     val_acc = AverageMeter('val_acc', ':.4e')
     best_val_acc = 0
@@ -217,7 +136,6 @@ def train(model_fusion, train_loader, test_loader, device, opt_dict):
             loss_cls.backward()
             optimizer.step()
 
-            # 训练日志记录
             log_out = ('Epoch: [{0}][{1}/{2}], lr: {lr:.5f}\t'
                        'Train_Acc {acc.val:.4f} ({acc.avg:.4f})\t'.format(
                         epoch, step, len(train_loader), 
@@ -231,7 +149,6 @@ def train(model_fusion, train_loader, test_loader, device, opt_dict):
         model_fusion.eval()
         val_acc.reset()
         
-        # 新增统计变量
         correct_each_class = {i:0 for i in range(num_cls)}
         total_each_class = [0] * num_cls
         correct_tail, total_tail = 0, 0
@@ -251,35 +168,29 @@ def train(model_fusion, train_loader, test_loader, device, opt_dict):
                 val_acc_o = accuracy(results, labels)[0]
                 val_acc.update(val_acc_o.item(), batch_size_cur)
                 
-                # 收集预测结果
                 preds = results.argmax(dim=1)
                 y_true.extend(labels.cpu().numpy())
                 y_pred.extend(preds.cpu().numpy())
                 
-                # 统计每个类别
                 for true, pred in zip(labels.cpu(), preds.cpu()):
                     cls = true.item()
                     total_each_class[cls] += 1
                     if true == pred:
                         correct_each_class[cls] += 1
                     
-                    # 统计长尾类别
                     if cls in long_classes:
                         total_long += 1
                         if true == pred:
                             correct_long += 1
-                    # 统计尾部类别
                     elif cls in tail_classes:
                         total_tail += 1
                         if true == pred:
                             correct_tail += 1
 
-        # 计算指标
         tail_acc = correct_tail / total_tail if total_tail > 0 else 0.0
         long_acc = correct_long / total_long if total_long > 0 else 0.0
-        f1 = f1_score(y_true, y_pred, average='macro')  # 使用宏平均
+        f1 = f1_score(y_true, y_pred, average='macro')
         
-        # 记录验证指标
         log_out_val = (
             f"Val_Acc: {val_acc.avg:.4f}\t"
             f"Tail_Acc: {tail_acc:.4f}\t"
@@ -288,13 +199,11 @@ def train(model_fusion, train_loader, test_loader, device, opt_dict):
         )
         log_train = write_log(log_train, log_out_val, opt_dict)
 
-        # 记录每个类别的准确率
         for cls in range(num_cls):
             acc_cls = correct_each_class[cls] / total_each_class[cls] if total_each_class[cls] > 0 else 0.0
             log_cls = f"Class {cls}: Acc={acc_cls:.4f} ({correct_each_class[cls]}/{total_each_class[cls]})"
             log_train = write_log(log_train, log_cls, opt_dict)
 
-        # 保存最佳模型
         if val_acc.avg > best_val_acc:
             best_val_acc = val_acc.avg
             log_best = f"Best Model Saved at Acc: {best_val_acc:.4f}, F1: {f1:.4f}"
