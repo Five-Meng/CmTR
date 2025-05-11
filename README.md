@@ -1,5 +1,5 @@
 # CmTR
-### python环境配置
+### Environment
 
 ```markdown
 Python >= 3.8
@@ -23,83 +23,90 @@ torchvision == 0.13.1+cu113
 tqdm == 4.67.1
 ```
 
-### 数据集
+### Dataset
 
-使用图像-表格对作为数据集，如图。这些数据集中的图像和表格数据相互关联，用于训练和测试多模态融合模型。图像数据主要包含各类视觉信息，表格数据则提供了结构化的数据特征，表格数据带有缺失。
-
-![image-20250510190307821]()
-
-### 运行方法
-
-![image-20250510190332740]()
+The dataset consists of image-table pairs, as illustrated in the figure. Within these datasets, images and tabular data are interrelated and jointly used for training and evaluating multimodal fusion models. The image data captures diverse visual information, whereas the tabular data offers structured features, some of which contain missing values.
 
 
+![dataset](https://github.com/Five-Meng/CmTR/blob/main/image-20250510190307821.png)
 
-### 训练流程
+### Run
 
-该训练过程分为三个主要阶段，采用分步训练的方式，逐步构建并优化模型，以实现多模态数据（图像与表格数据）的有效处理和利用，以及对缺失数据的补充。
 
-#### 参数配置
+![CmTR](https://github.com/Five-Meng/CmTR/blob/main/image-20250510190332740.png)
+
+
+
+### Train
+
+The training process is divided into three main stages, using a step-by-step training approach to progressively build and optimize the model for effective processing and utilization of multimodal data (image and tabular data), as well as the completion of missing data.
+
+#### Parameter 
 
 #### dataset_config
 
-| 参数名              | 说明                                         |
-| ------------------- | -------------------------------------------- |
-| dataname            | 指定数据集名称（如 dvm），用于区分不同数据集 |
-| dataset             | 图像数据集路径，模型读取图像数据的来源       |
-| dataset_tabular     | 表格数据集（CSV 文件）路径，存储结构化数据   |
-| image_result_path   | 图像相关结果的保存路径                       |
-| tabular_result_path | 表格数据结果的保存路径                       |
-| it_result_path      | 图像与表格融合结果的保存路径                 |
-| num_cls             | 分类任务的类别数量                           |
-| data_dir            | 数据集根目录                                 |
-| missing_rate        | 表格数据的缺失率                             |
-| missing_mask_train  | 训练集缺失掩码文件路径                       |
-| missing_mask_val    | 验证集缺失掩码文件路径                       |
-| missing_mask_test   | 测试集缺失掩码文件路径                       |
+| Parameter             | Description                                                    |
+| --------------------- | -------------------------------------------------------------- |
+| dataname              | Specify the dataset name (e.g., dvm) to distinguish datasets   |
+| dataset               | Path to the image dataset, source for loading image data       |
+| dataset\_tabular      | Path to the tabular dataset (CSV file) storing structured data |
+| image\_result\_path   | Path to save image-related results                             |
+| tabular\_result\_path | Path to save tabular data results                              |
+| it\_result\_path      | Path to save image-table fusion results                        |
+| num\_cls              | Number of classes for classification task                      |
+| data\_dir             | Root directory of the dataset                                  |
+| missing\_rate         | Missing rate of the tabular data                               |
+| missing\_mask\_train  | Path to the missing mask file for the training set             |
+| missing\_mask\_val    | Path to the missing mask file for the validation set           |
+| missing\_mask\_test   | Path to the missing mask file for the test set                 |
+
 
 #### train_config
 
-| 参数名          | 说明                                       |
-| --------------- | ------------------------------------------ |
-| mode            | 训练模式（通常设为 train）                 |
-| epochs          | 训练轮数                                   |
-| max_epochs      | 最大训练轮数                               |
-| lr_max          | 最大学习率，控制参数更新步长               |
-| lr_min          | 最小学习率，学习率衰减下限                 |
-| batch_size      | 单次训练的数据样本数量                     |
-| seed            | 随机种子，确保实验可复现                   |
-| lossfunc        | 损失函数名称（如 focalloss、crossentropy） |
-| checkpoint_path | 模型检查点保存路径                         |
+| Parameter        | Description                                               |
+| ---------------- | --------------------------------------------------------- |
+| mode             | Training mode (usually set to "train")                    |
+| epochs           | Number of training epochs                                 |
+| max\_epochs      | Maximum number of training epochs                         |
+| lr\_max          | Maximum learning rate, controls step size for updates     |
+| lr\_min          | Minimum learning rate, lower bound for decay              |
+| batch\_size      | Number of samples per training batch                      |
+| seed             | Random seed to ensure reproducibility                     |
+| lossfunc         | Name of the loss function (e.g., focalloss, crossentropy) |
+| checkpoint\_path | Path to save model checkpoints                            |
+
 
 #### H2T
 
-| 参数名  | 说明                          |
-| ------- | ----------------------------- |
-| h2t     | 布尔值，控制是否启用 H2T 方法 |
-| rho_h2t | H2T 方法中的系数              |
+| Parameter | Description                                        |
+| --------- | -------------------------------------------------- |
+| h2t       | Boolean value to control whether to use H2T method |
+| rho\_h2t  | Coefficient used in the H2T method                 |
+
 
 #### model_config
 
-| 参数名            | 说明                                   |
-| ----------------- | -------------------------------------- |
-| net_v             | 图像模型网络结构（如 efficientnet-b1） |
-| net_v_tabular     | 表格数据模型网络结构                   |
-| net               | 跨模态 / 融合模型网络结构              |
-| model_name        | 模型名称                               |
-| freeze_layers     | 布尔值，控制是否冻结模型层             |
-| embedding_dropout | 嵌入层丢弃率，防止过拟合               |
-| embedding_dim     | 嵌入层维度                             |
-| hidden_size1      | 隐藏层 1 维度                          |
-| hidden_size2      | 隐藏层 2 维度                          |
-| hidden_size3      | 隐藏层 3 维度                          |
+| Parameter          | Description                                                |
+| ------------------ | ---------------------------------------------------------- |
+| net\_v             | Image model architecture (e.g., efficientnet-b1)           |
+| net\_v\_tabular    | Tabular data model architecture                            |
+| net                | Cross-modal / fusion model architecture                    |
+| model\_name        | Name of the model                                          |
+| freeze\_layers     | Boolean value to control whether to freeze layers          |
+| embedding\_dropout | Dropout rate in the embedding layer to prevent overfitting |
+| embedding\_dim     | Dimension of the embedding layer                           |
+| hidden\_size1      | Dimension of hidden layer 1                                |
+| hidden\_size2      | Dimension of hidden layer 2                                |
+| hidden\_size3      | Dimension of hidden layer 3                                |
 
-#### **predict_config**
 
-| 参数名               | 说明                           |
-| -------------------- | ------------------------------ |
-| load_predict_feature | 预测时加载特征提取模型参数路径 |
-| load_predict_re      | 预测时加载重建模型参数路径     |
+#### predict_config
+
+| Parameter              | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| load\_predict\_feature | Path to load parameters for feature extraction model during prediction |
+| load\_predict\_re      | Path to load parameters for reconstruction model during prediction     |
+
 
 ###  VDM
 
@@ -109,9 +116,9 @@ python main.py --yaml_config argparses/efficientnet.yaml
 
 ### DBRM
 
-此阶段又细分为图像分支和表格分支的处理，以及跨模态信息补充。
+This stage is further divided into processing of the image branch and the tabular branch, as well as cross-modal information augmentation.
 
-图像数据处理训练命令：
+Training command for image data processing:
 
 ```bash
 python backbone_prototype/train_re_cls.py --yaml_config argparses/efficientnet_re_cls.yaml
@@ -119,7 +126,7 @@ python backbone_prototype/train_re_cls_prototype.py --yaml_config argparses/effi
 python backbone_prototype/predict.py --yaml_config argparses/efficientnet_re_cls.yaml
 ```
 
-表格数据处理训练命令：
+Training command for Tabular data processing:
 
 ```bash
 python backbone_tabular_prototype/train_re_cls.py --yaml_config argparses/mlp_re_cls.yaml
@@ -127,7 +134,7 @@ python backbone_tabular_prototype/train_re_cls_prototype.py --yaml_config argpar
 python backbone_tabular_prototype/predict_tab.py --yaml_config argparses/mlp_re_cls.yaml
 ```
 
-跨模态融合：
+Cross-modal fusion:
 
 ```bash
 python backbone_img_tab/train_crossattn.py --yaml_config argparses/crossattn.yaml
