@@ -1,7 +1,6 @@
 # CmTR
 
-<iframe src="https://docs.google.com/viewer?url=https://github.com/Five-Meng/CmTR/raw/main/method.pdf&embedded=true" style="width:100%; height:600px;" frameborder="0"></iframe>
-
+https://github.com/Five-Meng/CmTR/blob/main/method.pdf
 
 ### Environment
 
@@ -37,8 +36,8 @@ The BSD dataset will be made available upon reasonable request.
 
 The DVM dataset is publicly accessible at https://deepvisualmarketing.github.io/.
 
-<iframe src="https://docs.google.com/viewer?url=https://github.com/Five-Meng/CmTR/raw/main/dataset.pdf&embedded=true" style="width:100%; height:600px;" frameborder="0"></iframe>
 
+https://github.com/Five-Meng/CmTR/blob/main/dataset.pdf
 
 ### Run
 
