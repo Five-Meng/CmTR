@@ -2,7 +2,7 @@
 
 https://github.com/Five-Meng/CmTR/blob/main/method.pdf
 
-### Environment
+## Environment
 
 ```markdown
 Python >= 3.8
@@ -26,11 +26,11 @@ torchvision == 0.13.1+cu113
 tqdm == 4.67.1
 ```
 
-### Dataset
+## Dataset
 
 The dataset consists of image-table pairs, as illustrated in the figure. Within these datasets, images and tabular data are interrelated and jointly used for training and evaluating multimodal fusion models. The image data captures diverse visual information, whereas the tabular data offers structured features, some of which contain missing values.
 
-#### Available 
+### Available 
 
 The BSD dataset will be made available upon reasonable request. 
 
@@ -39,7 +39,7 @@ The DVM dataset is publicly accessible at https://deepvisualmarketing.github.io/
 
 https://github.com/Five-Meng/CmTR/blob/main/dataset.pdf
 
-### Run
+## Run
 
 ### Train
 
@@ -144,6 +144,11 @@ Cross-modal fusion:
 python backbone_img_tab/train_crossattn.py --yaml_config argparses/crossattn.yaml
 ```
 
+### FM
+
+```bash
+python backbone_img_tab/train_multimodel.py --yaml_config argparses/multimodel.yaml
+```
 
 ## Test
 
@@ -151,8 +156,3 @@ python backbone_img_tab/train_crossattn.py --yaml_config argparses/crossattn.yam
 python test.py -–yaml_config argparses/test.yaml
 ```
 
-### FM
-
-```bash
-python backbone_img_tab/train_multimodel.py --yaml_config argparses/multimodel.yaml
-```
