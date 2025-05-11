@@ -1,0 +1,49 @@
+dataset_config:
+  dataname: dvm
+  dataset: /data/blood_dvm/data/dvm/dvm_img/
+  dataset_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_data/dvm_orig_standard.csv
+  data_dir: /data/blood_dvm/data/dvm/
+  missing_rate: 0.0
+  missing_mask_train: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_train_mask.npy
+  missing_mask_val: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_val_mask.npy
+  missing_mask_test: /data/blood_dvm/data/dvm/dvm_table/mask/random/dvm_random_nostandard_0.0_test_mask.npy
+  image_result_path: /data/blood_dvm/data/result/baseline/image/
+  tabular_result_path: /data/blood_dvm/data/result/baseline/tabular/
+  it_result_path: /data/blood_dvm/data/result/baseline/image_tabular/
+  field_lengths_tabular: /data/blood_dvm/data/dvm/dvm_table/dvm_TIP_data/field_lengths_tabular_dvm.pt
+  save_csv: /home/admin1/User/mxy/demo/save_csv/dvm/test_integrated.csv
+  num_cls: 286
+
+test_config:
+  mode: test
+  batch_size: 64
+  seed: 2024
+
+model_config:
+  net_v: efficientnet-b1
+  net_v_tabular: encoder_mlp_prototype
+  net: crossattn1
+  model_name: integrated_model
+  freeze_layers: false
+  embedding_dropout: 0.0
+  efficientb1_outdim: 1280
+  embedding_dim: 256
+  hidden_size1: 2048
+  hidden_size2: 1024
+  hidden_size3: 512
+  latent_dim: 2048
+  hidden_size_importance: 512
+  init_strat: kaiming
+  dim_fusion: 256
+  re_dim: 512
+  tab_proj_dropout: 0.1
+
+predict_config:
+  load_predict_feature_img: /data/blood_dvm/data/result/end/encoder_image/img_re_cls/00_feature_100_0.37886158412475457_97.5478414656267.pth
+  load_predict_feature_tab: /data/blood_dvm/data/result/end/encoder_tabular/dvm/re_cls/07_feature_100_5e-5_1.386613375539899_28.555233085434427.pth
+  load_predict_attn: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_attn_100_0.35784914591730604_97.11023943406494.pth
+  load_predict_fc: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_fc_100_0.35784914591730604_97.11023943406494.pth
+  load_predict_graph: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_graph_100_0.35784914591730604_97.11023943406494.pth
+  load_prototype_img: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_prototype_img_100_0.35784914591730604_97.11023943406494.pth
+  load_prototype_tab: /data/blood_dvm/data/result/temp/img_re_cls_prototype/00_prototype_tab_100_0.35784914591730604_97.11023943406494.pth
+
