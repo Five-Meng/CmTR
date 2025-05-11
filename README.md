@@ -1,4 +1,7 @@
 # CmTR
+
+![CmTR](https://github.com/Five-Meng/CmTR/blob/main/image-20250510190332740.png)
+
 ### Environment
 
 ```markdown
@@ -31,11 +34,6 @@ The dataset consists of image-table pairs, as illustrated in the figure. Within 
 ![dataset](https://github.com/Five-Meng/CmTR/blob/main/image-20250510190307821.png)
 
 ### Run
-
-
-![CmTR](https://github.com/Five-Meng/CmTR/blob/main/image-20250510190332740.png)
-
-
 
 ### Train
 
@@ -140,8 +138,15 @@ Cross-modal fusion:
 python backbone_img_tab/train_crossattn.py --yaml_config argparses/crossattn.yaml
 ```
 
+
+## Test
+
+```bash
+python test.py -–yaml_config argparses/test.yaml
 ### FM
 
 ```bash
+
+
 python backbone_img_tab/train_multimodel.py --yaml_config argparses/multimodel.yaml
 ```
